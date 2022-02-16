@@ -4,7 +4,8 @@
   "info": {
     "singularName": "alarm",
     "pluralName": "alarms",
-    "displayName": "alarms"
+    "displayName": "alarms",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -13,6 +14,24 @@
   "attributes": {
     "name": {
       "type": "string"
+    },
+    "datetime": {
+      "type": "datetime"
+    },
+    "onoff": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string"
+    },
+    "music": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "alarms"
     }
   }
 }

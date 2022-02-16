@@ -1,0 +1,18 @@
+{
+  "kind": "collectionType",
+  "collectionName": "alarms",
+  "info": {
+    "singularName": "alarm",
+    "pluralName": "alarms",
+    "displayName": "alarms"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    }
+  }
+}

@@ -76,7 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     Button(
                       'Sign In With Email',
                       'email',
-                      () {},
+                      () {
+                        Navigator.pushNamed(context, '/signin');
+                      },
                     ),
                   ],
                 ),

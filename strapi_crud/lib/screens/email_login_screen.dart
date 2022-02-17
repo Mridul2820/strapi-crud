@@ -10,22 +10,40 @@ class EmailLoginScreen extends StatefulWidget {
 }
 
 class _EmailLoginScreenState extends State<EmailLoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-
   String? email;
   String? password;
-  String? name;
   bool _obscureText = false;
 
-  final pass = new TextEditingController();
+  final pass = TextEditingController();
 
-  void _submitData() {}
+  void _submitData() {
+    // if (email == null || password == null || name == null) {
+    //   return;
+    // } else {
+    print('Email: $email');
+    print('Password: $password');
+    // }
+  }
+
   var border = const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
     borderRadius: BorderRadius.all(
       Radius.circular(10.0),
     ),
   );
-  var space = SizedBox(height: 24);
+
+  var borderFocus = const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
+    borderRadius: BorderRadius.all(
+      Radius.circular(10.0),
+    ),
+  );
+
+  var space = const SizedBox(height: 24);
 
   @override
   Widget build(BuildContext context) {
@@ -34,16 +52,27 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
-            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 // email
                 TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined),
+                    enabledBorder: border,
+                    fillColor: Colors.black12,
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      color: Colors.white,
+                    ),
                     labelText: 'Email',
+                    labelStyle: const TextStyle(
+                      color: Colors.white,
+                    ),
                     border: border,
+                    focusedBorder: borderFocus,
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -59,11 +88,22 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                 space,
                 // password
                 TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                   controller: pass,
                   decoration: InputDecoration(
+                    enabledBorder: border,
                     labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
+                    labelStyle: const TextStyle(
+                      color: Colors.white,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: Colors.white,
+                    ),
                     border: border,
+                    focusedBorder: borderFocus,
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -92,15 +132,24 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      _submitData();
+                    },
                     style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         ),
                       ),
                     ),
-                    child: const Text('Login'),
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
                 space,
@@ -119,13 +168,19 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         ),
                       ),
                     ),
-                    child: const Text('Dont have an account? Sign Up'),
+                    child: const Text(
+                      'Dont have an account? Sign Up',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
               ],

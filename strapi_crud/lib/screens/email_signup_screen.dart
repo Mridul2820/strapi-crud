@@ -16,14 +16,27 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
   String? name;
   bool _obscureText = false;
 
-  final pass = new TextEditingController();
+  final pass = TextEditingController();
 
   void _submitData() {}
   var border = const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
     borderRadius: BorderRadius.all(
       Radius.circular(10.0),
     ),
   );
+
+  var borderFocus = const OutlineInputBorder(
+    borderSide: BorderSide(
+      color: Colors.white,
+    ),
+    borderRadius: BorderRadius.all(
+      Radius.circular(10.0),
+    ),
+  );
+
   var space = SizedBox(height: 20);
 
   @override
@@ -37,12 +50,53 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // name
+                TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                  decoration: InputDecoration(
+                    enabledBorder: border,
+                    labelText: 'Full name',
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(
+                      Icons.account_circle,
+                      color: Colors.white,
+                    ),
+                    border: border,
+                    focusedBorder: borderFocus,
+                  ),
+                  onSaved: (val) {
+                    name = val;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter some name';
+                    }
+                    return null;
+                  },
+                ),
+                space,
                 // email
                 TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.email_outlined),
+                    enabledBorder: border,
+                    prefixIcon: const Icon(
+                      Icons.email_outlined,
+                      color: Colors.white,
+                    ),
                     labelText: 'Email',
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
                     border: border,
+                    focusedBorder: borderFocus,
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
@@ -58,11 +112,22 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                 space,
                 // password
                 TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                   controller: pass,
                   decoration: InputDecoration(
+                    enabledBorder: border,
                     labelText: 'Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: Colors.white,
+                    ),
                     border: border,
+                    focusedBorder: borderFocus,
                     suffixIcon: GestureDetector(
                       onTap: () {
                         setState(() {
@@ -88,33 +153,26 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                 space,
                 // confirm passwords
                 TextFormField(
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
                   decoration: InputDecoration(
+                    enabledBorder: border,
                     labelText: 'Confirm Password',
-                    prefixIcon: const Icon(Icons.lock_outline),
+                    labelStyle: TextStyle(
+                      color: Colors.white,
+                    ),
+                    prefixIcon: const Icon(
+                      Icons.lock_outline,
+                      color: Colors.white,
+                    ),
                     border: border,
+                    focusedBorder: borderFocus,
                   ),
                   obscureText: true,
                   validator: (value) {
                     if (value != pass.text) {
                       return 'password not match';
-                    }
-                    return null;
-                  },
-                ),
-                space,
-                // name
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Full name',
-                    prefixIcon: const Icon(Icons.account_circle),
-                    border: border,
-                  ),
-                  onSaved: (val) {
-                    name = val;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter some name';
                     }
                     return null;
                   },
@@ -127,13 +185,20 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                   child: ElevatedButton(
                     onPressed: () {},
                     style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         ),
                       ),
                     ),
-                    child: const Text('Sign Up'),
+                    child: const Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
                 space,
@@ -146,19 +211,25 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return EmailLoginScreen();
+                            return const EmailLoginScreen();
                           },
                         ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
                         ),
                       ),
                     ),
-                    child: const Text('Already have an account?'),
+                    child: const Text(
+                      'Already have an account? Login',
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
                   ),
                 ),
               ],

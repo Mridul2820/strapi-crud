@@ -12,10 +12,14 @@ class ScreenCotainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/background.jpg"),
+            image: const AssetImage("assets/images/background.jpg"),
             fit: BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              Colors.black.withOpacity(0.4),
+              BlendMode.darken,
+            ),
           ),
         ),
         constraints: const BoxConstraints.expand(),

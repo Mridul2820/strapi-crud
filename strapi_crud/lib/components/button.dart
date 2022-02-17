@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 class Button extends StatelessWidget {
   final String text;
   final String imagePath;
-  final Function onPressed;
+  final Function onPressedEvent;
 
   Button(
     this.text,
     this.imagePath,
-    this.onPressed,
+    this.onPressedEvent,
   );
 
   @override
@@ -39,7 +39,7 @@ class Button extends StatelessWidget {
         ],
       ),
       onPressed: () {
-        onPressed();
+        onPressedEvent();
       },
     );
   }

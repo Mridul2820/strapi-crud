@@ -8,14 +8,6 @@ import '../components/button.dart';
 class LoginSignUpScreen extends StatelessWidget {
   const LoginSignUpScreen({Key? key}) : super(key: key);
 
-  void _loginWithEmail(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (context) => const EmailLoginScreen(),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return ScreenCotainer(
@@ -39,7 +31,16 @@ class LoginSignUpScreen extends StatelessWidget {
                   Button(
                     'Sign In With Email',
                     'email',
-                    _loginWithEmail,
+                    () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return EmailLoginScreen();
+                          },
+                        ),
+                      );
+                    },
                   ),
                 ],
               ),

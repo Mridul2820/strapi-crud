@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../screens/home_screen.dart';
 import '../screens/email_login_screen.dart';
 import '../components/screen_container.dart';
 
@@ -28,7 +29,16 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
     );
 
     Map<String, dynamic> responseData = json.decode(response.body);
-    print(responseData);
+    if (responseData['jwt'] != null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return HomeScreen();
+          },
+        ),
+      );
+    }
   }
 
   var border = const OutlineInputBorder(

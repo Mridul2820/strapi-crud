@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../screens/email_signup_screen.dart';
 import '../components/screen_container.dart';
 
@@ -10,19 +12,25 @@ class EmailLoginScreen extends StatefulWidget {
 }
 
 class _EmailLoginScreenState extends State<EmailLoginScreen> {
+  final _formKey = GlobalKey<FormState>();
+
   String? email;
   String? password;
   bool _obscureText = false;
 
   final pass = TextEditingController();
 
-  void _submitData() {
-    // if (email == null || password == null || name == null) {
-    //   return;
-    // } else {
-    print('Email: $email');
-    print('Password: $password');
-    // }
+  _loginUser() async {
+    http.Response response = await http.post(
+      Uri.parse('http://192.168.31.58:1337/api/auth/local'),
+      body: {
+        'identifier': email,
+        'password': password,
+      },
+    );
+
+    Map<String, dynamic> responseData = json.decode(response.body);
+    print(responseData);
   }
 
   var border = const OutlineInputBorder(
@@ -52,6 +60,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
+            key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -133,7 +142,10 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      _submitData();
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        _loginUser();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,

@@ -17,7 +17,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
 
   final pass = TextEditingController();
 
-  _submitData() async {
+  _registerUser() async {
     http.Response response = await http.post(
       Uri.parse('http://192.168.31.58:1337/api/auth/local/register'),
       body: {
@@ -198,7 +198,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        _submitData();
+                        _registerUser();
                       }
                     },
                     style: ElevatedButton.styleFrom(

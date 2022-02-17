@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../screens/email_login_screen.dart';
-import '../components/title.dart';
 import '../components/screen_container.dart';
 
 class EmailSignupScreen extends StatefulWidget {
@@ -11,14 +12,25 @@ class EmailSignupScreen extends StatefulWidget {
 class _EmailSignupScreenState extends State<EmailSignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? email;
-  String? password;
-  String? name;
+  String? username, email, password;
   bool _obscureText = false;
 
   final pass = TextEditingController();
 
-  void _submitData() {}
+  _submitData() async {
+    http.Response response = await http.post(
+      Uri.parse('http://192.168.31.58:1337/api/auth/local/register'),
+      body: {
+        'username': username,
+        'email': email,
+        'password': password,
+      },
+    );
+
+    Map<String, dynamic> responseData = json.decode(response.body);
+    print(responseData);
+  }
+
   var border = const OutlineInputBorder(
     borderSide: BorderSide(
       color: Colors.white,
@@ -37,7 +49,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
     ),
   );
 
-  var space = SizedBox(height: 20);
+  var space = const SizedBox(height: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +62,15 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // name
+                // username
                 TextFormField(
                   style: const TextStyle(
                     color: Colors.white,
                   ),
                   decoration: InputDecoration(
                     enabledBorder: border,
-                    labelText: 'Full name',
-                    labelStyle: TextStyle(
+                    labelText: 'Username',
+                    labelStyle: const TextStyle(
                       color: Colors.white,
                     ),
                     fillColor: Colors.white,
@@ -70,11 +82,11 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                     focusedBorder: borderFocus,
                   ),
                   onSaved: (val) {
-                    name = val;
+                    username = val;
                   },
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter some name';
+                      return 'Please enter some username';
                     }
                     return null;
                   },
@@ -92,7 +104,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                       color: Colors.white,
                     ),
                     labelText: 'Email',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Colors.white,
                     ),
                     border: border,
@@ -119,7 +131,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                   decoration: InputDecoration(
                     enabledBorder: border,
                     labelText: 'Password',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Colors.white,
                     ),
                     prefixIcon: const Icon(
@@ -159,7 +171,7 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                   decoration: InputDecoration(
                     enabledBorder: border,
                     labelText: 'Confirm Password',
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Colors.white,
                     ),
                     prefixIcon: const Icon(
@@ -183,7 +195,12 @@ class _EmailSignupScreenState extends State<EmailSignupScreen> {
                   height: 50,
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        _submitData();
+                      }
+                    },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                       shape: const RoundedRectangleBorder(

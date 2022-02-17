@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import '../screens/email_login_screen.dart';
+import '../screens/email_signup_screen.dart';
+
 import '../components/title.dart';
 import '../components/screen_container.dart';
 
-import './email_login_screen.dart';
 import '../components/button.dart';
 
 class LoginSignUpScreen extends StatelessWidget {

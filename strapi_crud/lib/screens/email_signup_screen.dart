@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import '../screens/email_signup_screen.dart';
+import '../screens/email_login_screen.dart';
+import '../components/title.dart';
 import '../components/screen_container.dart';
 
-class EmailLoginScreen extends StatefulWidget {
-  const EmailLoginScreen({Key? key}) : super(key: key);
-
+class EmailSignupScreen extends StatefulWidget {
   @override
-  _EmailLoginScreenState createState() => _EmailLoginScreenState();
+  State<EmailSignupScreen> createState() => _EmailSignupScreenState();
 }
 
-class _EmailLoginScreenState extends State<EmailLoginScreen> {
+class _EmailSignupScreenState extends State<EmailSignupScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String? email;
@@ -25,7 +24,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
       Radius.circular(10.0),
     ),
   );
-  var space = SizedBox(height: 24);
+  var space = SizedBox(height: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -87,6 +86,40 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                   },
                 ),
                 space,
+                // confirm passwords
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Confirm Password',
+                    prefixIcon: const Icon(Icons.lock_outline),
+                    border: border,
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value != pass.text) {
+                      return 'password not match';
+                    }
+                    return null;
+                  },
+                ),
+                space,
+                // name
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Full name',
+                    prefixIcon: const Icon(Icons.account_circle),
+                    border: border,
+                  ),
+                  onSaved: (val) {
+                    name = val;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please enter some name';
+                    }
+                    return null;
+                  },
+                ),
+                space,
                 // signUP button
                 SizedBox(
                   height: 50,
@@ -100,7 +133,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                         ),
                       ),
                     ),
-                    child: const Text('Login'),
+                    child: const Text('Sign Up'),
                   ),
                 ),
                 space,
@@ -113,7 +146,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return EmailSignupScreen();
+                            return EmailLoginScreen();
                           },
                         ),
                       );
@@ -125,7 +158,7 @@ class _EmailLoginScreenState extends State<EmailLoginScreen> {
                         ),
                       ),
                     ),
-                    child: const Text('Dont have an account? Sign Up'),
+                    child: const Text('Already have an account?'),
                   ),
                 ),
               ],
